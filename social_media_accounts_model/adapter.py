@@ -10,6 +10,7 @@ class SocialMediaAccountsAdapter(pm.ModelAdapter):
 
     @classmethod
     def api(cls):
+        # input-output API
         columns = [
             ("primary_platform", int),
             ("account_age_days", int),
@@ -31,6 +32,7 @@ class SocialMediaAccountsAdapter(pm.ModelAdapter):
         return inputs, outputs
 
     def predict(self, df_in):
+        # generate predict using input features
         df_in["prediction"] = self.model.predict(
             df_in[["primary_platform", "account_age_days", "verified_flag",
                 "followers_cnt", "base_post_rate", "prior_flags_cnt",
