@@ -14,17 +14,18 @@ def compute(training_data_input, model_output):
     training_df = training_data_input.pandas()
     model = train_model(training_df)
 
+    # use adapter to publish model to foundry
     foundry_model = SocialMediaAccountsAdapter(model)
-
+    
     model_output.publish(
         model_adapter=foundry_model,
     )
-
 
 def train_model(training_df):
     X_train = training_df.drop(columns=["label", "account_id"])
     y_train = training_df["label"]
 
+    # create standard scaller for X_train -> Logisitic Regression Model
     pipe = Pipeline(
         steps=[
             ("scaler", StandardScaler()),
